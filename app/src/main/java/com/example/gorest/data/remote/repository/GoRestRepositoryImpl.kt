@@ -1,6 +1,5 @@
 package com.example.gorest.data.remote.repository
 
-import android.util.Log
 import com.example.gorest.data.remote.GoRestApi
 import com.example.gorest.data.remote.responses.UsersResponse
 import com.example.gorest.data.remote.responses.UsersResponseItem

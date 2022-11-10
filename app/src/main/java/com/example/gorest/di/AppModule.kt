@@ -1,7 +1,5 @@
 package com.example.gorest.di
 
-import android.app.Application
-import android.content.Context
 import com.example.gorest.data.remote.GoRestApi
 import com.example.gorest.data.remote.repository.GoRestRepositoryImpl
 import com.example.gorest.util.Constants.BASE_URL
@@ -23,12 +21,6 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideContext(application: Application): Context {
-        return application.applicationContext
-    }
-
-    @Singleton
-    @Provides
     fun provideInterceptor(): Interceptor {
         return Interceptor {
             val token: String = TOKEN
@@ -44,8 +36,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClientBuilder(
-        headerInterceptor: Interceptor,
-        context: Context
+        headerInterceptor: Interceptor
     ): OkHttpClient.Builder {
         val builder = OkHttpClient()
             .newBuilder()
@@ -55,7 +46,6 @@ object AppModule {
             //X-Pagination-Pages is logged by okhttp interceptor.
             level = HttpLoggingInterceptor.Level.BODY
         })
-//        OkHttp3Integrator.applyTo(TrustManagerBuilder().withManifestConfig(context), builder)
         return builder
     }
 
@@ -77,16 +67,5 @@ object AppModule {
     fun provideGoRestRepository(
         api: GoRestApi
     ) = GoRestRepositoryImpl(api)
-
-//    @Singleton
-//    @Provides
-//    fun provideBookUseCases(repository: LocalBookRepository): BookUseCases {
-//        return BookUseCases(
-//            getBooks = GetBooks(repository),
-//            getBookById = GetBookById(repository),
-//            addBook = AddBook(repository),
-//            deleteBook = DeleteBook(repository)
-//        )
-//    }
 
 }
